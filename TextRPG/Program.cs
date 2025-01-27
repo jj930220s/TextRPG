@@ -1,2 +1,19 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using TextRPG;
+using System.Threading.Tasks;
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        StartScene startScene = new StartScene();
+
+
+
+    }
+
+
+
+
+}
+
