@@ -35,7 +35,7 @@ namespace TextRPG
             name = Console.ReadLine();
 
 
-            Console.WriteLine("당신의 직업은? \n 1. 전사 \n 2. 마법사 \n 3. 백수");
+            Console.WriteLine("당신의 직업은? \n 1. 전사 \n 2. 마법사 \n 3. 무직");
             jobNum=int.Parse(Console.ReadLine());
 
 
@@ -45,7 +45,6 @@ namespace TextRPG
             Console.WriteLine("아무 키나 누르면 시작합니다");
             Console.ReadKey();
             Console.Clear();
-
         }
 
         private void SetDefaultChar(string str, int num)
@@ -87,11 +86,9 @@ namespace TextRPG
 
         public void SavePlayerData()
         {
-            string str = AppDomain.CurrentDomain.BaseDirectory;
             StringBuilder sb = new StringBuilder();
-            sb.Append(str);
+            sb.Append(AppDomain.CurrentDomain.BaseDirectory);
             sb.Append("CharData.txt");
-            Console.WriteLine(sb.ToString());
 
             try 
             { 
@@ -139,9 +136,30 @@ namespace TextRPG
             
         }
 
+        public void ShowCharStatus()
+        {
+            Console.Clear();
+
+            Console.WriteLine($"이름\t: {name}");
+            Console.WriteLine($"레벨\t: {PlayerLv}");
+            Console.WriteLine($"직업\t: {job}");
+            Console.WriteLine($"HP\t: {PlayerHp}/{PlayerMaxHp}");
+            Console.WriteLine($"공격력\t: {PlayerAtt}");
+            Console.WriteLine($"방어력\t: {PlayerDef}");
+            Console.WriteLine($"소지금\t: {PlayerGold}");
+
+            Console.WriteLine("돌아가려면 아무 키나 누르세요");
+            Console.ReadKey();
+        }
+
+        
 
         #region SetCharStatus
-
+        public int PlayerLv
+        {
+            get { return lv; }
+            set { lv = value; }
+        }
         public int PlayerHp
         {
             get { return nowHP; }
