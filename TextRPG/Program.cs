@@ -8,6 +8,10 @@ class Program
     {
         StartScene startScene = new StartScene();
 
+        Player player= new Player();
+
+        startScene.Logo();
+        player.MakePlayer();
 
 
     }

@@ -83,6 +83,62 @@ namespace TextRPG
             }
 
 
+            SavePlayerData();
         }
 
+        public void SavePlayerData()
+        {
+            string str = AppDomain.CurrentDomain.BaseDirectory;
+            StringBuilder sb = new StringBuilder();
+            sb.Append(str);
+            sb.Append("CharData.txt");
+            Console.WriteLine(sb.ToString());
+
+            try 
+            { 
+                StreamWriter sw=new StreamWriter(sb.ToString());
+
+                sw.WriteLine(name);
+                sw.WriteLine(lv.ToString());
+                sw.WriteLine(job);
+                sw.WriteLine(att.ToString());
+                sw.WriteLine(def.ToString());
+                sw.WriteLine(maxHP.ToString());
+                sw.WriteLine(nowHP.ToString());
+                sw.WriteLine(gold.ToString());
+
+                sw.Close();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public void LoadPlayerData()
+        {
+            string line;
+            try
+            { StreamReader sr = new StreamReader("C://CharData.txt");
+
+
+                line = sr.ReadLine();
+
+                while (line != null)
+                {
+                    Console.WriteLine(line);
+                    line = sr.ReadLine();
+                }
+                sr.Close();
+                Console.ReadLine();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            
+        }
+
+    }
 }
