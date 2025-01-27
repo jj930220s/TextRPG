@@ -4,9 +4,8 @@ using System;
 
 class Program
 {
-    public static Action playerStatus;
 
-    static void Main(string[] args)
+    static void Main()
     {
         StartScene startScene = new StartScene();
 
@@ -18,9 +17,8 @@ class Program
 
         player.MakePlayer();
 
-        playerStatus += player.ShowCharStatus;
 
-        stage.StartStage(playerStatus,playerStatus);
+        stage.StartStage(player);
     }
 
 

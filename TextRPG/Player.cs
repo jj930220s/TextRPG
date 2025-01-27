@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Buffers;
+using System.Drawing;
 
 namespace TextRPG
 {
@@ -143,7 +144,9 @@ namespace TextRPG
             Console.WriteLine($"이름\t: {name}");
             Console.WriteLine($"레벨\t: {PlayerLv}");
             Console.WriteLine($"직업\t: {job}");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"HP\t: {PlayerHp}/{PlayerMaxHp}");
+            Console.ResetColor();
             Console.WriteLine($"공격력\t: {PlayerAtt}");
             Console.WriteLine($"방어력\t: {PlayerDef}");
             Console.WriteLine($"소지금\t: {PlayerGold}");
@@ -152,7 +155,18 @@ namespace TextRPG
             Console.ReadKey();
         }
 
-        
+        public void ShowInventory()
+        {
+            Console.Clear();
+
+            Console.WriteLine("인벤토리");
+            Console.WriteLine("돌아가려면 아무 키나 누르세요");
+            Console.ReadKey();
+        }
+        public void SetInventory(IItem item)
+        {
+
+        }
 
         #region SetCharStatus
         public int PlayerLv
