@@ -28,8 +28,7 @@ namespace TextRPG
         private int nowHP;
         private int gold;
 
-
-
+   
         public void MakePlayer()
         {
             Console.WriteLine("당신의 이름은? ");
@@ -140,5 +139,37 @@ namespace TextRPG
             
         }
 
+
+        #region SetCharStatus
+
+        public int PlayerHp
+        {
+            get { return nowHP; }
+            set { nowHP = value; }
+        }
+        public int PlayerMaxHp
+        {
+            get { return maxHP; }
+            set { maxHP = value; }
+        }
+
+        public int PlayerAtt
+        {
+            get { return att; }
+            set { att = value; }
+        }
+        public int PlayerDef
+        {
+            get { return def; }
+            set { def = value; }
+        }
+
+        public int PlayerGold
+        {
+            get { return gold; }
+            set { gold = value; }
+        }
+        #endregion
+        
     }
 }
