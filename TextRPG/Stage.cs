@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Collections.Specialized.BitVector32;
@@ -9,14 +10,11 @@ namespace TextRPG
 {
     internal class Stage
     {
-        private Action showStatus;
-        private Action showInven;
+        private Player player;
 
-        public void StartStage(Action status, Action inven)
+        public void StartStage(Player p)
         {
-            showStatus = status;
-            showInven= inven;
-
+            player = p;
             Console.WriteLine("당신은 작은 마을 입구에 서 있다.\n 무엇을 할까?");
 
             ShowOption();
@@ -33,12 +31,15 @@ namespace TextRPG
             switch (input)
             {
                 case 1:
+                    EnterVillage();
                     break;
                 case 2:
-                    showStatus?.Invoke();
+                    player.ShowCharStatus();
+                    ShowOption();
                     break;
                 case 3:
-                    showInven?.Invoke();
+                    player.ShowInventory();
+                    ShowOption();
                     break;
                 default:
                     Console.WriteLine("범위에서 벗어났습니다.");
@@ -47,6 +48,43 @@ namespace TextRPG
 
         }
 
+        private void EnterVillage()
+        {
+            Console.WriteLine("마을에 들어왔다. 이제 무엇을 할까?");
+
+            Console.WriteLine("1. 여관으로\n2. 상점으로\n3.내정보\n4. 인벤토리");
+            int input = int.Parse(Console.ReadLine());
+
+            switch (input)
+            {
+                case 1:
+                    break;
+                case 2:
+                    ShowShop();
+                    break;
+                case 3:
+                    player.ShowCharStatus();
+                    break;
+                case 4:
+                    player.ShowInventory();
+                    break;
+                default:
+                    Console.WriteLine("범위에서 벗어났습니다.");
+                    break;
+            }
+
+        }
+
+        private void ShowShop()
+        {
+
+        }
+
+        private void BuyItem()
+        {
+            IItem item=null;
+            player.SetInventory(item);
+        }
 
     }
 }
