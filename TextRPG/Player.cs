@@ -125,8 +125,12 @@ namespace TextRPG
         {
             string line;
             try
-            { StreamReader sr = new StreamReader("C://CharData.txt");
+            { 
+                StringBuilder sb = new StringBuilder();
+                sb.Append(AppDomain.CurrentDomain.BaseDirectory);
+                sb.Append("CharData.txt");
 
+                StreamReader sr = new StreamReader(sb.ToString());
 
                 line = sr.ReadLine();
 
@@ -162,6 +166,7 @@ namespace TextRPG
 
             Console.WriteLine("돌아가려면 아무 키나 누르세요");
             Console.ReadKey();
+            Console.Clear();
         }
 
         public void ShowInventory()
@@ -171,8 +176,14 @@ namespace TextRPG
             Console.WriteLine("인벤토리");
             Console.WriteLine("돌아가려면 아무 키나 누르세요");
             Console.ReadKey();
+            Console.Clear();
         }
-        public void SetInventory(IItem item)
+        public void InputItem(IItem item)
+        {
+
+        }
+
+        public void UseItem(IItem item)
         {
 
         }
