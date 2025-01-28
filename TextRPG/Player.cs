@@ -146,8 +146,15 @@ namespace TextRPG
             {
                 Console.WriteLine(e.Message);
             }
+        }
 
-            
+        public void SaveInvenData()
+        {
+            inventory.SaveInvenData();
+        }
+        public void LoadInvenData()
+        {
+            inventory.LoadInvenData();
         }
 
         public void ShowCharStatus()
@@ -174,18 +181,22 @@ namespace TextRPG
             Console.Clear();
 
             Console.WriteLine("인벤토리");
+
+            inventory.ShowInven();
+
             Console.WriteLine("돌아가려면 아무 키나 누르세요");
             Console.ReadKey();
             Console.Clear();
         }
+
         public void InputItem(IItem item)
         {
-
+            inventory.InputItem(item);
         }
 
         public void UseItem(IItem item)
         {
-
+            inventory.UseItem(item);
         }
 
         #region SetCharStatus
