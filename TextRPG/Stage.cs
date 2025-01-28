@@ -15,7 +15,7 @@ namespace TextRPG
         public void StartStage(Player p)
         {
             player = p;
-            Console.WriteLine("당신은 작은 마을 입구에 서 있다.\n 무엇을 할까?");
+            Console.WriteLine("당신은 작은 마을 입구에 서 있다.\n무엇을 할까?");
 
             ShowOption();
     
@@ -24,8 +24,8 @@ namespace TextRPG
 
 
         private void ShowOption()
-        {
-            Console.WriteLine("1. 안으로 들어가다\n2. 내정보\n3.인벤토리");
+        { 
+            Console.WriteLine("1. 안으로 들어가다\n2. 내정보\n3. 인벤토리");
             int input = int.Parse(Console.ReadLine());
 
             switch (input)
