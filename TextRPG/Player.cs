@@ -29,6 +29,15 @@ namespace TextRPG
         private int nowHP;
         private int gold;
 
+        private Inventory inventory;
+
+        public void DataLoad()
+        {
+            // 처음에 해야 하는것
+            inventory = new Inventory();
+
+            MakePlayer();
+        }
    
         public void MakePlayer()
         {

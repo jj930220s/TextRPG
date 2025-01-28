@@ -15,7 +15,7 @@ class Program
         
         startScene.Logo();
 
-        player.MakePlayer();
+        player.DataLoad();
 
 
         stage.StartStage(player);

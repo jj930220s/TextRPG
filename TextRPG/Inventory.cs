@@ -8,7 +8,7 @@ namespace TextRPG
 {
     enum ITEMTYPE
     {
-        EQUIP=1,
+        EQUIP = 1,
         CONSUME
     }
 
@@ -20,7 +20,7 @@ namespace TextRPG
 
         public void use(ITEMTYPE type)
         {
-            switch(type)
+            switch (type)
             {
                 case ITEMTYPE.EQUIP:
                     break;
@@ -28,6 +28,13 @@ namespace TextRPG
                     break;
             }
         }
+    }
+
+    internal class Inventory
+    {
+        public List<IItem> inventory;
+
+
 
 
 
