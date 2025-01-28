@@ -83,7 +83,7 @@ namespace TextRPG
         private void BuyItem()
         {
             IItem item=null;
-            player.SetInventory(item);
+            //player.SetInventory(item);
         }
 
     }
