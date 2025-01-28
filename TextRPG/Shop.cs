@@ -8,6 +8,7 @@ namespace TextRPG
 {
     internal class Shop
     {
+        public List<IItem> items = new List<IItem>();
 
         // 기본 아이템 세팅 읽어오기
         // 엑셀이 안깔려있어서 텍스트파일로 대체
@@ -20,35 +21,30 @@ namespace TextRPG
             StreamReader sr = new StreamReader(sb.ToString());
             string line;
 
-            line = sr.ReadLine();
+            items.Clear();
 
-            List<IItem> items = new List<IItem>();
+            line = sr.ReadLine();
 
             while (line != null)
             {
                 string[] itemData = line.Split(".");
 
                 IItem newItem=new IItem();
-                newItem.Name= itemData[0];
-                newItem.att = int.Parse(itemData[1]);
-                newItem.def = int.Parse(itemData[2]);
-                newItem.ITEMTYPE =(ITEMTYPE)int.Parse(itemData[3]);
-                newItem.isSell = int.Parse(itemData[4]) == 0 ? true : false;
-                newItem.tip = itemData[5];
+                newItem.index = int.Parse(itemData[0]);
+                newItem.name= itemData[1];
+                newItem.att = int.Parse(itemData[2]);
+                newItem.def = int.Parse(itemData[3]);
+                newItem.ITEMTYPE =(ITEMTYPE)int.Parse(itemData[4]);
+                newItem.isSell = int.Parse(itemData[5]) == 0 ? true : false;
+                newItem.tip = itemData[6];
             
                 items.Add(newItem);
 
                 line = sr.ReadLine();
 
             }
-
-
             sr.Close();
-
-
         }
-
-
 
     }
 }
