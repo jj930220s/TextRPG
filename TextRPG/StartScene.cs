@@ -7,8 +7,9 @@ namespace TextRPG
 {
     internal class StartScene
     {
-        public void Logo()
+        public void Logo(Action action)
         {
+            action?.Invoke();   //로고 보여줄 때 로드 미리 해두기
             ShowLogo();
         }
 
