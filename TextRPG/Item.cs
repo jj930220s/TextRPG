@@ -26,6 +26,8 @@ namespace TextRPG
 
         public bool isSell {  get; set; }
 
+        public bool isEquip {  get; set; }
+
         public string tip { get; set; }
 
         public void use(ITEMTYPE type)

@@ -8,7 +8,7 @@ namespace TextRPG
 {
     internal class Shop
     {
-        public List<IItem> items = new List<IItem>();
+        public static List<IItem> items = new List<IItem>();
 
         // 기본 아이템 세팅 읽어오기
         // 엑셀이 안깔려있어서 텍스트파일로 대체
@@ -36,7 +36,8 @@ namespace TextRPG
                 newItem.def = int.Parse(itemData[3]);
                 newItem.ITEMTYPE =(ITEMTYPE)int.Parse(itemData[4]);
                 newItem.isSell = int.Parse(itemData[5]) == 0 ? true : false;
-                newItem.tip = itemData[6];
+                newItem.isEquip = int.Parse(itemData[6]) == 1 ? true : false;
+                newItem.tip = itemData[7];
             
                 items.Add(newItem);
 

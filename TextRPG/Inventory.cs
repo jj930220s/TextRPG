@@ -9,7 +9,7 @@ namespace TextRPG
 {
     internal class Inventory
     {
-        public List<IItem> inventory;
+        public List<IItem> inventory=new List<IItem>();
 
 
         public void ShowInven()
@@ -18,8 +18,24 @@ namespace TextRPG
 
             foreach (var item in inventory)
             {
-                Console.WriteLine(item.name);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write(item.isEquip == true ? "[E]" :"   ");
+                Console.ResetColor();
+
+                Console.Write(item.name + " | ");
+                switch (item.ITEMTYPE)
+                {
+                    case ITEMTYPE.EQUIP:
+                        Console.Write("공격력 : "+item.att + " | ");
+                        Console.Write("방어력 : "+item.def + " | ");
+                        break;
+                    case ITEMTYPE.CONSUME:
+                        Console.Write("회복량 :"+item.att + " | ");
+                        break;
+                } 
+                Console.WriteLine(item.tip + " ");
             }
+            SaveInvenData();
         }
 
         public void InputItem(IItem item)
@@ -30,10 +46,11 @@ namespace TextRPG
 
         public void InputItem(int index)
         {
+            IItem item = Shop.items[index];
 
             inventory.Add(item);
-            SaveInvenData();
 
+            SaveInvenData();
         }
 
         public void UseItem(IItem item)
@@ -53,6 +70,7 @@ namespace TextRPG
             sb.Append(AppDomain.CurrentDomain.BaseDirectory);
             sb.Append("InvenData.txt");
 
+            inventory.OrderBy(i => i.index);
 
             try
             {
@@ -64,8 +82,9 @@ namespace TextRPG
                     sw.Write(inventory.ElementAt(i).name+".");
                     sw.Write(inventory.ElementAt(i).att+".");
                     sw.Write(inventory.ElementAt(i).def+".");
-                    sw.Write(inventory.ElementAt(i).ITEMTYPE+".");
-                    sw.Write(inventory.ElementAt(i).isSell+".");
+                    sw.Write((int)inventory.ElementAt(i).ITEMTYPE+".");
+                    sw.Write((inventory.ElementAt(i).isSell == true ? 1 : 0) + ".");
+                    sw.Write((inventory.ElementAt(i).isEquip == true ? 1 : 0) + ".");
                     sw.WriteLine(inventory.ElementAt(i).tip);
                 }
 
@@ -91,9 +110,6 @@ namespace TextRPG
 
                 while (line != null)
                 {
-                    
-                    Console.WriteLine(line);
-
                     string[] itemData = line.Split(".");
                     IItem newItem = new IItem();
                     newItem.index = int.Parse(itemData[0]);
@@ -101,15 +117,15 @@ namespace TextRPG
                     newItem.att = int.Parse(itemData[2]);
                     newItem.def = int.Parse(itemData[3]);
                     newItem.ITEMTYPE = (ITEMTYPE)int.Parse(itemData[4]);
-                    newItem.isSell = int.Parse(itemData[5]) == 0 ? true : false;
-                    newItem.tip = itemData[6];
+                    newItem.isSell = int.Parse(itemData[5]) == 1 ? true : false;
+                    newItem.isEquip = int.Parse(itemData[6]) == 1 ? true : false;
+                    newItem.tip = itemData[7];
 
                     inventory.Add(newItem);
 
                     line = sr.ReadLine();
                 }
                 sr.Close();
-                Console.ReadLine();
             }
             catch (Exception e)
             {

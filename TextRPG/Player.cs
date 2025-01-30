@@ -52,6 +52,7 @@ namespace TextRPG
             Console.WriteLine($"이름 : {name} 직업 : {jobNum}");
             SetDefaultChar(name, jobNum);
 
+            LoadInvenData();
             Console.WriteLine("아무 키나 누르면 시작합니다");
             Console.ReadKey();
             Console.Clear();
@@ -192,6 +193,10 @@ namespace TextRPG
         public void InputItem(IItem item)
         {
             inventory.InputItem(item);
+        }
+        public void InputItem(int index)
+        {
+            inventory.InputItem(index);
         }
 
         public void UseItem(IItem item)
