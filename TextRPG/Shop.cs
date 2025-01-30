@@ -12,7 +12,7 @@ namespace TextRPG
 
         // 기본 아이템 세팅 읽어오기
         // 엑셀이 안깔려있어서 텍스트파일로 대체
-        public void SetBasicItem()
+        public void SetSellItem()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(AppDomain.CurrentDomain.BaseDirectory);
@@ -45,6 +45,11 @@ namespace TextRPG
 
             }
             sr.Close();
+        }
+
+        public void SaveSellItem()
+        {
+
         }
 
     }

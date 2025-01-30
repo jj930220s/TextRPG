@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Buffers;
 using System.Drawing;
+using System.ComponentModel;
 
 namespace TextRPG
 {
@@ -36,7 +37,6 @@ namespace TextRPG
             // 처음에 해야 하는것
             inventory = new Inventory();
 
-            MakePlayer();
         }
    
         public void MakePlayer()
@@ -49,10 +49,9 @@ namespace TextRPG
             jobNum=int.Parse(Console.ReadLine());
 
 
-            Console.WriteLine($"이름 : {name} 직업 : {jobNum}");
+            Console.WriteLine($"이름 : {name} 직업 : {Enum.GetName(typeof(JOB), (JOB)jobNum)}");
             SetDefaultChar(name, jobNum);
 
-            LoadInvenData();
             Console.WriteLine("아무 키나 누르면 시작합니다");
             Console.ReadKey();
             Console.Clear();
@@ -124,6 +123,7 @@ namespace TextRPG
 
         public void LoadPlayerData()
         {
+            List<string> list = new List<string>();
             string line;
             try
             { 
@@ -134,18 +134,29 @@ namespace TextRPG
                 StreamReader sr = new StreamReader(sb.ToString());
 
                 line = sr.ReadLine();
+                list.Add(line);
 
                 while (line != null)
                 {
-                    Console.WriteLine(line);
                     line = sr.ReadLine();
+                    list.Add(line);
                 }
                 sr.Close();
-                Console.ReadLine();
+
+
+                name = list[0];
+                lv = int.Parse(list[1]);
+                job = list[2];
+                att = int.Parse(list[3]);
+                def = int.Parse(list[4]);
+                nowHP = int.Parse(list[5]);
+                maxHP = int.Parse(list[6]);
+                gold = int.Parse(list[7]);
+
             }
             catch(Exception e)
             {
-                Console.WriteLine(e.Message);
+                MakePlayer();
             }
         }
 
@@ -185,9 +196,40 @@ namespace TextRPG
 
             inventory.ShowInven();
 
-            Console.WriteLine("돌아가려면 아무 키나 누르세요");
-            Console.ReadKey();
+            Console.WriteLine("1. 아이템 장착/사용\n2. 돌아가기");
+
+            int input = int.Parse(Console.ReadLine());
+
+            switch(input)
+            {
+                case 1:
+                    ShowEquipItem();
+                    break;
+                case 2:
+                    break;
+                default:
+                    Console.WriteLine("범위에서 벗어났습니다.");
+                    break;
+
+            }
+
+
             Console.Clear();
+        }
+
+        private void ShowEquipItem()
+        {
+            int i = 0;
+            foreach(var item in inventory.inven)
+            {
+                Console.WriteLine(i + ". " + item.name);
+                i++;
+            }
+            Console.WriteLine("사용할 아이템 번호를 입력하세요.");
+            int input = int.Parse(Console.ReadLine());
+
+            inventory.UseItem(input);
+
         }
 
         public void InputItem(IItem item)

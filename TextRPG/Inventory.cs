@@ -9,14 +9,14 @@ namespace TextRPG
 {
     internal class Inventory
     {
-        public List<IItem> inventory=new List<IItem>();
+        public List<IItem> inven=new List<IItem>();
 
 
         public void ShowInven()
         {
             Console.Clear();
 
-            foreach (var item in inventory)
+            foreach (var item in inven)
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write(item.isEquip == true ? "[E]" :"   ");
@@ -35,12 +35,11 @@ namespace TextRPG
                 } 
                 Console.WriteLine(item.tip + " ");
             }
-            SaveInvenData();
         }
 
         public void InputItem(IItem item)
         {
-            inventory.Add(item);
+            inven.Add(item);
             SaveInvenData();
         }
 
@@ -48,7 +47,7 @@ namespace TextRPG
         {
             IItem item = Shop.items[index];
 
-            inventory.Add(item);
+            inven.Add(item);
 
             SaveInvenData();
         }
@@ -56,12 +55,35 @@ namespace TextRPG
         public void UseItem(IItem item)
         {
             if (item.ITEMTYPE == ITEMTYPE.CONSUME)
-                inventory.Remove(item);
+                inven.Remove(item);
             else
             {
-
+                EquipItem(item);
             }
             SaveInvenData();
+        }
+
+        public void UseItem(int index)
+        {
+            UseItem(inven.ElementAt(index));
+        }
+
+        private void EquipItem(IItem item)
+        {
+            switch(item.isEquip)
+            {
+                case true:
+                    GameManager.instance.Player.PlayerAtt -= item.att;
+                    GameManager.instance.Player.PlayerDef -= item.def;
+                    item.isEquip = !item.isEquip;
+                    break;
+                case false:
+                    GameManager.instance.Player.PlayerAtt += item.att;
+                    GameManager.instance.Player.PlayerDef += item.def;
+                    item.isEquip = !item.isEquip;
+                    break;
+            }
+            GameManager.instance.Player.SavePlayerData();
         }
 
         public void SaveInvenData()
@@ -70,22 +92,22 @@ namespace TextRPG
             sb.Append(AppDomain.CurrentDomain.BaseDirectory);
             sb.Append("InvenData.txt");
 
-            inventory.OrderBy(i => i.index);
+            inven.OrderBy(i => i.index);
 
             try
             {
                 StreamWriter sw = new StreamWriter(sb.ToString());
 
-                for(int i = 0; i < inventory.Count;i++)
+                for(int i = 0; i < inven.Count;i++)
                 {
-                    sw.Write(inventory.ElementAt(i).index+".");
-                    sw.Write(inventory.ElementAt(i).name+".");
-                    sw.Write(inventory.ElementAt(i).att+".");
-                    sw.Write(inventory.ElementAt(i).def+".");
-                    sw.Write((int)inventory.ElementAt(i).ITEMTYPE+".");
-                    sw.Write((inventory.ElementAt(i).isSell == true ? 1 : 0) + ".");
-                    sw.Write((inventory.ElementAt(i).isEquip == true ? 1 : 0) + ".");
-                    sw.WriteLine(inventory.ElementAt(i).tip);
+                    sw.Write(inven.ElementAt(i).index+".");
+                    sw.Write(inven.ElementAt(i).name+".");
+                    sw.Write(inven.ElementAt(i).att+".");
+                    sw.Write(inven.ElementAt(i).def+".");
+                    sw.Write((int)inven.ElementAt(i).ITEMTYPE+".");
+                    sw.Write((inven.ElementAt(i).isSell == true ? 1 : 0) + ".");
+                    sw.Write((inven.ElementAt(i).isEquip == true ? 1 : 0) + ".");
+                    sw.WriteLine(inven.ElementAt(i).tip);
                 }
 
                 sw.Close();
@@ -121,7 +143,7 @@ namespace TextRPG
                     newItem.isEquip = int.Parse(itemData[6]) == 1 ? true : false;
                     newItem.tip = itemData[7];
 
-                    inventory.Add(newItem);
+                    inven.Add(newItem);
 
                     line = sr.ReadLine();
                 }
