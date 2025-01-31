@@ -237,6 +237,14 @@ namespace TextRPG
             int i = 0;
             Console.Clear();
 
+            if(inventory.inven.Count==0)
+            {
+                Console.WriteLine("가진 아이템이 없습니다.\n돌아가려면 아무 키나 누르세요");
+                Console.ReadKey();
+                return;
+            }
+
+
             foreach (var item in inventory.inven)
             {
                 Console.WriteLine(i + ". " + item.name);
