@@ -42,7 +42,7 @@ namespace TextRPG
                     ShowOption();
                     break;
                 default:
-                    Console.WriteLine("범위에서 벗어났습니다.");
+                    GameManager.instance.ExitConsole();
                     break;
             }
 
@@ -69,7 +69,7 @@ namespace TextRPG
                     player.ShowInventory();
                     break;
                 default:
-                    Console.WriteLine("범위에서 벗어났습니다.");
+                    GameManager.instance.ExitConsole();
                     break;
             }
 

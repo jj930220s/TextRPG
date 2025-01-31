@@ -31,6 +31,12 @@ public class GameManager
     }
 
 
+    public void ExitConsole()
+    {
+        Console.WriteLine("범위에서 벗어났습니다.");
+        Environment.Exit(0);
+    }
+
 
 
 }
