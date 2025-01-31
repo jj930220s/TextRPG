@@ -30,6 +30,8 @@ namespace TextRPG
         private int nowHP;
         private int gold;
 
+        public int itemAtt;
+        public int itemDef;
         private Inventory inventory;
 
         public void DataLoad()
@@ -70,6 +72,7 @@ namespace TextRPG
             maxHP = 100;
             gold = 1500;
 
+            // 직업별 추가 능력치
             switch (num)
             {
                 case 1:
@@ -109,9 +112,11 @@ namespace TextRPG
                 sw.WriteLine(job);
                 sw.WriteLine(att.ToString());
                 sw.WriteLine(def.ToString());
-                sw.WriteLine(maxHP.ToString());
                 sw.WriteLine(nowHP.ToString());
+                sw.WriteLine(maxHP.ToString());
                 sw.WriteLine(gold.ToString());
+                sw.WriteLine(itemAtt.ToString());
+                sw.WriteLine(itemDef.ToString());
 
                 sw.Close();
             }
@@ -152,6 +157,8 @@ namespace TextRPG
                 nowHP = int.Parse(list[5]);
                 maxHP = int.Parse(list[6]);
                 gold = int.Parse(list[7]);
+                itemAtt = int.Parse(list[8]);
+                itemDef = int.Parse(list[9]);
 
             }
             catch(Exception e)
@@ -179,8 +186,16 @@ namespace TextRPG
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"HP\t: {PlayerHp}/{PlayerMaxHp}");
             Console.ResetColor();
-            Console.WriteLine($"공격력\t: {PlayerAtt}");
-            Console.WriteLine($"방어력\t: {PlayerDef}");
+            if(PlayerItemAtt!=0)
+                Console.WriteLine($"공격력\t: {PlayerAtt} (+{PlayerItemAtt})");
+            else
+                Console.WriteLine($"공격력\t: {PlayerAtt}");
+
+            if(PlayerItemDef!=0)
+                Console.WriteLine($"방어력\t: {PlayerDef} (+{PlayerItemDef})");
+            else
+                Console.WriteLine($"방어력\t: {PlayerDef}");
+            
             Console.WriteLine($"소지금\t: {PlayerGold}");
 
             Console.WriteLine("돌아가려면 아무 키나 누르세요");
@@ -198,9 +213,9 @@ namespace TextRPG
 
             Console.WriteLine("1. 아이템 장착/사용\n2. 돌아가기");
 
-            int input = int.Parse(Console.ReadLine());
+            int input = GameManager.instance.InputReadLine();
 
-            switch(input)
+            switch (input)
             {
                 case 1:
                     ShowEquipItem();
@@ -208,7 +223,7 @@ namespace TextRPG
                 case 2:
                     break;
                 default:
-                    Console.WriteLine("범위에서 벗어났습니다.");
+                    GameManager.instance.ExitConsole();
                     break;
 
             }
@@ -226,13 +241,13 @@ namespace TextRPG
                 i++;
             }
             Console.WriteLine("사용할 아이템 번호를 입력하세요.");
-            int input = int.Parse(Console.ReadLine());
+            int input = GameManager.instance.InputReadLine();
 
             inventory.UseItem(input);
 
         }
 
-        public void InputItem(IItem item)
+        public void InputItem(Item item)
         {
             inventory.InputItem(item);
         }
@@ -241,9 +256,18 @@ namespace TextRPG
             inventory.InputItem(index);
         }
 
-        public void UseItem(IItem item)
+        public void UseItem(Item item)
         {
             inventory.UseItem(item);
+        }
+
+        public void GetHP(int i)
+        {
+            PlayerHp += i;
+            if (PlayerHp > PlayerMaxHp)
+                PlayerHp = PlayerMaxHp;
+
+            SavePlayerData();
         }
 
         #region SetCharStatus
@@ -279,7 +303,17 @@ namespace TextRPG
             get { return gold; }
             set { gold = value; }
         }
+        public int PlayerItemAtt
+        {
+            get { return itemAtt; }
+            set { itemAtt = value; }
+        }
+        public int PlayerItemDef
+        {
+            get { return itemDef; }
+            set { itemDef = value; }
+        }
         #endregion
-        
+
     }
 }

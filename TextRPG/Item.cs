@@ -13,7 +13,7 @@ namespace TextRPG
         CONSUME
     }
 
-    internal class IItem
+    internal class Item
     {
         public int index {  get; set; }
         public string name { get; set; }
@@ -42,9 +42,5 @@ namespace TextRPG
         }
 
     }
-    internal class Item
-    {
-        
 
-    }
 }

@@ -9,7 +9,7 @@ namespace TextRPG
 {
     internal class Inventory
     {
-        public List<IItem> inven=new List<IItem>();
+        public List<Item> inven=new List<Item>();
 
 
         public void ShowInven()
@@ -37,7 +37,7 @@ namespace TextRPG
             }
         }
 
-        public void InputItem(IItem item)
+        public void InputItem(Item item)
         {
             inven.Add(item);
             SaveInvenData();
@@ -45,17 +45,20 @@ namespace TextRPG
 
         public void InputItem(int index)
         {
-            IItem item = Shop.items[index];
+            Item item = Shop.items[index];
 
             inven.Add(item);
 
             SaveInvenData();
         }
 
-        public void UseItem(IItem item)
+        public void UseItem(Item item)
         {
             if (item.ITEMTYPE == ITEMTYPE.CONSUME)
+            {
+                GameManager.instance.Player.GetHP(item.att);
                 inven.Remove(item);
+            }
             else
             {
                 EquipItem(item);
@@ -68,18 +71,22 @@ namespace TextRPG
             UseItem(inven.ElementAt(index));
         }
 
-        private void EquipItem(IItem item)
+        private void EquipItem(Item item)
         {
             switch(item.isEquip)
             {
                 case true:
                     GameManager.instance.Player.PlayerAtt -= item.att;
                     GameManager.instance.Player.PlayerDef -= item.def;
+                    GameManager.instance.Player.PlayerItemAtt -= item.att;
+                    GameManager.instance.Player.PlayerItemDef -= item.def;
                     item.isEquip = !item.isEquip;
                     break;
                 case false:
                     GameManager.instance.Player.PlayerAtt += item.att;
                     GameManager.instance.Player.PlayerDef += item.def;
+                    GameManager.instance.Player.PlayerItemAtt += item.att;
+                    GameManager.instance.Player.PlayerItemDef += item.def;
                     item.isEquip = !item.isEquip;
                     break;
             }
@@ -120,11 +127,11 @@ namespace TextRPG
         public void LoadInvenData()
         {
             string line;
+            StringBuilder sb = new StringBuilder();
+            sb.Append(AppDomain.CurrentDomain.BaseDirectory);
+            sb.Append("InvenData.txt");
             try
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(AppDomain.CurrentDomain.BaseDirectory);
-                sb.Append("InvenData.txt");
 
                 StreamReader sr = new StreamReader(sb.ToString());
 
@@ -133,7 +140,7 @@ namespace TextRPG
                 while (line != null)
                 {
                     string[] itemData = line.Split(".");
-                    IItem newItem = new IItem();
+                    Item newItem = new Item();
                     newItem.index = int.Parse(itemData[0]);
                     newItem.name = itemData[1];
                     newItem.att = int.Parse(itemData[2]);
@@ -151,7 +158,9 @@ namespace TextRPG
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                // 첫 실행시 파일이 없는 경우 파일 생성
+                StreamWriter sw = new StreamWriter(sb.ToString());
+                sw.Write("");
             }
         }
     }
