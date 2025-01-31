@@ -13,6 +13,7 @@ public class GameManager
 
     private Shop shop = new Shop();
 
+    // 파일 저장 경로
     public string PATH = "../../../../TextRPG/ItemData.txt";
 
 
