@@ -263,6 +263,18 @@ namespace TextRPG
             inventory.UseItem(item);
         }
 
+        public bool UseGold(int i)
+        {
+            if (PlayerGold < i)
+            {
+                Console.WriteLine("돈이 모자랍니다!");
+                Console.ReadKey();
+                return false;
+            }
+            PlayerGold -= i;
+            return true;
+        }
+
         public void GetHP(int i)
         {
             PlayerHp += i;

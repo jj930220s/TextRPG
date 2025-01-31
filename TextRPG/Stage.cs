@@ -121,9 +121,15 @@ namespace TextRPG
             switch (input)
             {
                 case 1:
-                    player.PlayerGold -= 100;
-                    player.GetHP(3);
-                    ShowRest();
+                    if (player.UseGold(100))
+                    {
+                        player.GetHP(3);
+                        ShowRest();
+                    }
+                    else
+                    {
+                        ShowRest();
+                    }
                     break;
                 case 2:
                     ShowINNOption();

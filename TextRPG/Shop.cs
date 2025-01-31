@@ -134,7 +134,7 @@ namespace TextRPG
 
         private void ShowSellItemList()
         {
-            List<Item> itemList = items.Where(x => x.isSell == false).ToList();
+            List<Item> itemList = items.Where(x => x.isSell == false ).ToList();
 
             Console.Clear();
             foreach (var item in itemList)
@@ -151,6 +151,8 @@ namespace TextRPG
                         Console.Write("회복량 :" + item.att + " | ");
                         break;
                 }
+                Console.Write(item.price + "G | ");
+
                 Console.WriteLine(item.tip + " ");
             }
             Console.WriteLine("구매할 아이템 번호를 입력하세요.");
@@ -163,11 +165,26 @@ namespace TextRPG
         {
             Item item= items.ElementAt(index);
 
-            item.isSell = !item.isSell;
+            // 이미 팔린 물건 재구매 시도
+            if(item.isSell==true)
+            {
+                Console.WriteLine("이미 판매된 물건입니다.");
+                return;
+            }
 
+            // 돈 모자란 상황에서 재구매 시도
+            if (GameManager.instance.Player.UseGold(item.price)==false)
+            {
+                ShowSellItem(GameManager.instance.Player.PlayerGold);
+                return;
+            }
+
+            item.isSell = !item.isSell;
+            GameManager.instance.Player.PlayerGold -= item.price;
             GameManager.instance.Player.InputItem(item);
 
             SaveSellItem();
+            ShowSellItem(GameManager.instance.Player.PlayerGold);
         }
     }
 }
