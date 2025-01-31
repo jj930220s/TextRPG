@@ -15,8 +15,7 @@ namespace TextRPG
         public void SetSellItem()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(AppDomain.CurrentDomain.BaseDirectory);
-            sb.Append("ItemData.txt");
+            sb.Append(GameManager.instance.PATH);
 
             StreamReader sr = new StreamReader(sb.ToString());
             string line;
@@ -51,8 +50,7 @@ namespace TextRPG
         public void SaveSellItem()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(AppDomain.CurrentDomain.BaseDirectory);
-            sb.Append("ItemData.txt");
+            sb.Append(GameManager.instance.PATH);
 
 
             try
@@ -169,10 +167,12 @@ namespace TextRPG
             if(item.isSell==true)
             {
                 Console.WriteLine("이미 판매된 물건입니다.");
+                Console.ReadKey();
+                ShowSellItem(GameManager.instance.Player.PlayerGold);
                 return;
             }
 
-            // 돈 모자란 상황에서 재구매 시도
+            // 돈 모자란 상황에서 구매 시도
             if (GameManager.instance.Player.UseGold(item.price)==false)
             {
                 ShowSellItem(GameManager.instance.Player.PlayerGold);
