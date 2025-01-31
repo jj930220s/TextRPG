@@ -37,7 +37,8 @@ namespace TextRPG
                 newItem.ITEMTYPE =(ITEMTYPE)int.Parse(itemData[4]);
                 newItem.isSell = int.Parse(itemData[5]) == 1 ? true : false;
                 newItem.isEquip = int.Parse(itemData[6]) == 1 ? true : false;
-                newItem.tip = itemData[7];
+                newItem.price = int.Parse(itemData[7]);
+                newItem.tip = itemData[8];
             
                 items.Add(newItem);
 
@@ -67,6 +68,7 @@ namespace TextRPG
                     sw.Write((int)items.ElementAt(i).ITEMTYPE + ".");
                     sw.Write((items.ElementAt(i).isSell == true ? 1 : 0) + ".");
                     sw.Write((items.ElementAt(i).isEquip == true ? 1 : 0) + ".");
+                    sw.Write((items.ElementAt(i).price) + ".");
                     sw.WriteLine(items.ElementAt(i).tip);
                 }
 
@@ -107,6 +109,7 @@ namespace TextRPG
                         Console.Write("회복량 :" + item.att + " | ");
                         break;
                 }
+                Console.Write(item.price + "G | ");
                 Console.WriteLine(item.tip + " ");
                 Console.ResetColor();
 
@@ -133,6 +136,7 @@ namespace TextRPG
         {
             List<Item> itemList = items.Where(x => x.isSell == false).ToList();
 
+            Console.Clear();
             foreach (var item in itemList)
             {
                 Console.Write(item.index + " | ");

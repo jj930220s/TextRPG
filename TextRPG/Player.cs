@@ -235,7 +235,9 @@ namespace TextRPG
         private void ShowEquipItem()
         {
             int i = 0;
-            foreach(var item in inventory.inven)
+            Console.Clear();
+
+            foreach (var item in inventory.inven)
             {
                 Console.WriteLine(i + ". " + item.name);
                 i++;

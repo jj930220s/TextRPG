@@ -28,6 +28,7 @@ namespace TextRPG
 
         public bool isEquip {  get; set; }
 
+        public int price {  get; set; }
         public string tip { get; set; }
 
         public void use(ITEMTYPE type)
