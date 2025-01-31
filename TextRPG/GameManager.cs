@@ -13,6 +13,9 @@ public class GameManager
 
     private Shop shop = new Shop();
 
+    public string PATH = "../../../../TextRPG/ItemData.txt";
+
+
     internal Shop Shop { get => shop; private set => shop = value; }
 
     static void Main()
